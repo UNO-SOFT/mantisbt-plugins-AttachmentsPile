@@ -45,7 +45,7 @@ class AttachmentsPilePlugin extends MantisPlugin {
 		}
 		echo '<tr class="spacer"><th class="bug-custom-field category">' ,
 			string_display( lang_get_defaulted( 'attachments' ) ),
-			'</th><td>';
+			'</th><td colspan="5">';
 		$t_security_token = form_security_token( 'bug_file_delete' );
 		foreach( $t_attachments as $t_attachment ) {
 			print_bug_attachment( $t_attachment, $t_security_token );
