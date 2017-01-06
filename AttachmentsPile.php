@@ -36,8 +36,10 @@ class AttachmentsPilePlugin extends MantisPlugin {
 	function view_bug_attachments($p_event, $p_bug_id) {
 		# log_event( LOG_EMAIL_RECIPIENT, "event=$p_event params=".var_export($p_bug_id, true) );
 		require_once( MANTIS_CORE . '/bug_api.php' );
+		require_once( MANTIS_CORE . '/config_api.php' );
 		require_once( MANTIS_CORE . '/lang_api.php' );
 		require_once( MANTIS_CORE . '/print_api.php' );
+		require_once( MANTIS_CORE . '/user_api.php' );
 
 		$t_attachments = file_get_visible_attachments( $p_bug_id );
 		if( count( $t_attachments ) == 0) {
@@ -45,12 +47,20 @@ class AttachmentsPilePlugin extends MantisPlugin {
 		}
 		echo '<tr class="spacer"><th class="bug-custom-field category">' ,
 			string_display( lang_get_defaulted( 'attachments' ) ),
-			'</th><td colspan="5"><div style="-webkit-column-count: 3; -moz-column-count: 3; column-count: 3;">';
+			'</th><td colspan="5"><div style="-webkit-column-count: 3; -moz-column-count: 3; column-count: 3;"><ul>';
 		$t_security_token = form_security_token( 'bug_file_delete' );
+		$t_date_format = config_get( 'normal_date_format' );
 		foreach( $t_attachments as $t_attachment ) {
-			print_bug_attachment( $t_attachment, $t_security_token );
+			$t_added = date( $t_date_format, $t_attachment['date_added'] );
+			echo '<li><a href="#file-' . $t_attachment['id'] . '">',
+				$t_attachment['display_name'],
+				'</a> ',
+				'<span class="no-margin small lighter">(' . $t_added,
+				', @' . user_get_name( $t_attachment['user_id'] ),
+				')</span></li>' . "\n";
+			//print_bug_attachment( $t_attachment, $t_security_token );
 		}
-		echo '</div></td></tr>'."\n";
+		echo '</ul></div></td></tr>'."\n";
 	}
 
 }
