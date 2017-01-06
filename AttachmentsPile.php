@@ -45,12 +45,12 @@ class AttachmentsPilePlugin extends MantisPlugin {
 		}
 		echo '<tr class="spacer"><th class="bug-custom-field category">' ,
 			string_display( lang_get_defaulted( 'attachments' ) ),
-			'</th><td colspan="5">';
+			'</th><td colspan="5"><div style="-webkit-column-count: 3; -moz-column-count: 3; column-count: 3;">';
 		$t_security_token = form_security_token( 'bug_file_delete' );
 		foreach( $t_attachments as $t_attachment ) {
 			print_bug_attachment( $t_attachment, $t_security_token );
 		}
-		echo '</td></tr>'."\n";
+		echo '</div></td></tr>'."\n";
 	}
 
 }
