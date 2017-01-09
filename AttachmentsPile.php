@@ -52,12 +52,12 @@ class AttachmentsPilePlugin extends MantisPlugin {
 		$t_date_format = config_get( 'normal_date_format' );
 		foreach( $t_attachments as $t_attachment ) {
 			$t_added = date( $t_date_format, $t_attachment['date_added'] );
-			echo '<li><a href="#f' . $t_attachment['id'] . '">',
+			echo '<li><p><a href="#f' . $t_attachment['id'] . '">',
 				$t_attachment['display_name'],
-				'</a> ',
+				'</a><br/>',
 				'<span class="no-margin small lighter">(' . $t_added,
 				', @' . user_get_name( $t_attachment['user_id'] ),
-				')</span></li>' . "\n";
+				')</span></p></li>' . "\n";
 			//print_bug_attachment( $t_attachment, $t_security_token );
 		}
 		echo '</ul></div></td></tr>'."\n";
